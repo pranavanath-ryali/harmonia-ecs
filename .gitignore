@@ -1,0 +1,50 @@
+# Prerequisites / Environment
+.env
+
+# Build Directories
+build/
+bin/
+out/
+CMakeFiles/
+
+# CMake Output & Caches
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.ninja
+.ninja_*
+
+# Bear / Language Server Files
+compile_commands.json
+.cache/
+.clangd/
+
+# Object Files & Libraries
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug Symbols & Crash Logs
+*.dSYM/
+*.pdb
+*.ilk
+*.idb
+*.core
+vgcore.*
+
+# Editor / IDE Files
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
