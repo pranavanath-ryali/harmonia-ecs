@@ -19,6 +19,7 @@
           cmake
           ninja
           bear        # Generates compile_commands.json for clangd
+          just
 
           # Libraries & Graphics Dependencies
           raylib
