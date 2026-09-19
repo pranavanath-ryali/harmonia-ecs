@@ -2,22 +2,18 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../src/utils/sparse.h"
+#include "../src/utils/id_generator.h"
 
 int main() {
-    SparseArray* array = sparse_create();
+    IdGenerator* gen = create_id_generator();
 
-    sparse_add(array, 0, 123);
-    sparse_add(array, 1, 456);
-    sparse_add(array, 2, 789);
-    sparse_add(array, 3, 111);
+    for (int i = 0; i < 512; i++) {
+        uint32_t id = id_generator_next(gen);
+        printf("%u\n", id);
+    }
 
-    printf("0: %d; 1: %d; 2: %d; 3: %d", sparse_get(array, 0), sparse_get(array, 1), sparse_get(array, 2), sparse_get(array, 3));
+    id_generator_remove(gen, 128);
 
-    sparse_add(array, 16, 135);
-    printf("\nHMM: %d", sparse_get(array, 16));
-    printf("\n???: %d", sparse_get(array, 10));
-
-    sparse_pop(array, 16);
-    printf("\nHMM: %d", sparse_get(array, 16));
+    uint32_t id = id_generator_next(gen);
+    printf("%u\n", id);
 }

@@ -1,15 +1,13 @@
 #ifndef HARMONIA_WORLD
 #define HARMONIA_WORLD
 
+#include "utils/id_generator.h"
 #include <stdint.h>
 
 typedef uint32_t EntityId;
 
 typedef struct {
-    EntityId next_entityid;
-    EntityId* free_list;
-    EntityId free_count;
-    EntityId free_capacity;
+    IdGenerator* id_gen;
 } World;
 
 World *create_world();
