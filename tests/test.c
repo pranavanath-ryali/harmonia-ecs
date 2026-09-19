@@ -2,35 +2,22 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../src/world.h"
-#include "../src/component.h"
-
-
-typedef struct {} TestComponent1;
-typedef struct {} TestComponent2;
-typedef struct {} TestComponent3;
-
-DECLARE_COMPONENT_ID(TestComponent1);
-DECLARE_COMPONENT_ID(TestComponent2);
-DECLARE_COMPONENT_ID(TestComponent3);
+#include "../src/utils/sparse.h"
 
 int main() {
-    World *w = create_world();
+    SparseArray* array = sparse_create();
 
-    uint32_t e1 = ecs_create_entity(w);
-    uint32_t e2 = ecs_create_entity(w);
-    uint32_t e3 = ecs_create_entity(w);
+    sparse_add(array, 0, 123);
+    sparse_add(array, 1, 456);
+    sparse_add(array, 2, 789);
+    sparse_add(array, 3, 111);
 
-    printf("Created %d %d %d\n", e1, e2, e3);
+    printf("0: %d; 1: %d; 2: %d; 3: %d", sparse_get(array, 0), sparse_get(array, 1), sparse_get(array, 2), sparse_get(array, 3));
 
-    ecs_destroy_entity(w, e2);
+    sparse_add(array, 16, 135);
+    printf("\nHMM: %d", sparse_get(array, 16));
+    printf("\n???: %d", sparse_get(array, 10));
 
-    uint32_t e4 = ecs_create_entity(w);
-
-    printf("God new entity: %d\n", e4);
-
-    printf("Components: %d %d %d\n", COMPONENT_ID(TestComponent1), COMPONENT_ID(TestComponent2), COMPONENT_ID(TestComponent3));
-
-
-    return 0;
+    sparse_pop(array, 16);
+    printf("\nHMM: %d", sparse_get(array, 16));
 }
