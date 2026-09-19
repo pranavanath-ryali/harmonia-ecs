@@ -2,18 +2,35 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../src/utils/id_generator.h"
+#include "../src/component.h"
+
+typedef struct {
+    int x;
+} MyC;
+
 
 int main() {
-    IdGenerator* gen = create_id_generator();
+    ComponentPool* pool = pool_create(sizeof(MyC));
 
-    for (int i = 0; i < 512; i++) {
-        uint32_t id = id_generator_next(gen);
-        printf("%u\n", id);
-    }
+    MyC c;
+    c.x = 10;
+    pool_add(pool, 0, &c);
+    c.x = 20;
+    pool_add(pool, 1, &c);
+    c.x = 30;
+    pool_add(pool, 2, &c);
 
-    id_generator_remove(gen, 128);
+    MyC* retrived = pool_get(pool, 1);
+    printf("Value!: %d", retrived->x);
 
-    uint32_t id = id_generator_next(gen);
-    printf("%u\n", id);
+    pool_remove(pool, 1);
+
+    retrived = pool_get(pool, 2);
+    printf("\nValue!: %d", retrived->x);
+
+    c.x = 40;
+    pool_add(pool, 5, &c);
+
+    retrived = pool_get(pool, 5);
+    printf("\nValue!: %d", retrived->x);
 }
