@@ -1,6 +1,6 @@
-#include "component.h"
-#include "utils/dyn_array.h"
-#include "utils/sparse.h"
+#include "pool.h"
+#include "../utils/dyn_array.h"
+#include "../utils/sparse.h"
 
 #include <stddef.h>
 #include <stdint.h>

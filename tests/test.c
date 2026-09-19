@@ -1,8 +1,7 @@
 #include <assert.h>
-#include <stdint.h>
 #include <stdio.h>
 
-#include "../src/component.h"
+#include "../src/component/pool.h"
 
 typedef struct {
     int x;

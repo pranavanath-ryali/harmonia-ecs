@@ -1,8 +1,8 @@
 #ifndef HARMONIA_COMPONENT
 #define HARMONIA_COMPONENT
 
-#include "utils/sparse.h"
-#include "utils/dyn_array.h"
+#include "../utils/sparse.h"
+#include "../utils/dyn_array.h"
 
 #include <stddef.h>
 #include <stdint.h>
