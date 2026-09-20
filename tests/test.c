@@ -3,9 +3,12 @@
 
 #include "../src/utils/type_id.h"
 
-typedef struct {} TestComponent1;
-typedef struct {} TestComponent2;
-typedef struct {} TestComponent3;
+typedef struct {
+} TestComponent1;
+typedef struct {
+} TestComponent2;
+typedef struct {
+} TestComponent3;
 
 DECLARE_TYPE_ID(TestComponent1);
 DECLARE_TYPE_ID(TestComponent2);
