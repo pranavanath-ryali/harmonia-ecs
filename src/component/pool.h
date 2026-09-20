@@ -1,5 +1,5 @@
-#ifndef HARMONIA_COMPONENT
-#define HARMONIA_COMPONENT
+#ifndef HARMONIA_COMPONENT_POOL
+#define HARMONIA_COMPONENT_POOL
 
 #include "../utils/sparse.h"
 #include "../utils/dyn_array.h"
@@ -23,4 +23,4 @@ void* pool_get(ComponentPool* pool, uint32_t entity_id);
 
 void pool_remove(ComponentPool* pool, uint32_t entity_id);
 
-#endif // HARMONIA_COMPONENT
+#endif // HARMONIA_COMPONENT_POOL
