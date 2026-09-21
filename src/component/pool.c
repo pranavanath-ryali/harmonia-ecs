@@ -31,7 +31,8 @@ ComponentPool *componentpool_create(size_t stride) {
     return pool;
 }
 
-void componentpool_add(ComponentPool *pool, uint32_t entity_id, const void *data) {
+void componentpool_add(ComponentPool *pool, uint32_t entity_id,
+                       const void *data) {
     if (pool->index_map->count == pool->capacity) {
         pool->capacity = pool->capacity ? pool->capacity * 2 : 4;
         pool->data = realloc(pool->data, pool->capacity * pool->stride);
