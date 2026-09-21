@@ -15,11 +15,11 @@ typedef struct {
     DynArray(uint32_t)* index_map;
 } ComponentPool;
 
-ComponentPool* pool_create(size_t stride);
+ComponentPool* componentpool_create(size_t stride);
 
-void pool_add(ComponentPool* pool, uint32_t entity_id, const void* data);
-void* pool_get(ComponentPool* pool, uint32_t entity_id);
+void componentpool_add(ComponentPool* pool, uint32_t entity_id, const void* data);
+void* componentpool_get(ComponentPool* pool, uint32_t entity_id);
 
-void pool_remove(ComponentPool* pool, uint32_t entity_id);
+void componentpool_remove(ComponentPool* pool, uint32_t entity_id);
 
 #endif // HARMONIA_COMPONENT_POOL
