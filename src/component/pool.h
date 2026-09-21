@@ -1,8 +1,7 @@
 #ifndef HARMONIA_COMPONENT_POOL
 #define HARMONIA_COMPONENT_POOL
 
-#include "../utils/sparse.h"
-#include "../utils/dyn_array.h"
+#include "../utils/types.h"
 
 #include <stddef.h>
 #include <stdint.h>
@@ -12,8 +11,8 @@ typedef struct {
     size_t stride;
     uint32_t capacity;
 
-    SparseArray* sparse; // EntityID -> dense_index
-    DynArray* dense_to_entity; // dense_index -> EntityId // TODO: Rename
+    Dense(uint32_t)* entityid_map;
+    DynArray(uint32_t)* index_map;
 } ComponentPool;
 
 ComponentPool* pool_create(size_t stride);

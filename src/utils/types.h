@@ -9,6 +9,8 @@
 typedef void* voidptr;
 
 DEFINE_DENSE(uint32_t);
+DEFINE_DENSE(voidptr);
+
 DEFINE_DYN_ARRAY(uint32_t);
 
 #endif // !HARMONIA_TYPES
