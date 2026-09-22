@@ -3,6 +3,7 @@
 
 #include "../utils/types.h"
 #include "../utils/id_generator.h"
+#include <stdlib.h>
 
 typedef void (*SystemFunc)(void);
 
@@ -24,8 +25,6 @@ enum SystemStage {
 DEFINE_DYN_ARRAY(SystemFunc);
 
 typedef struct {
-    IdGenerator* id_gen;
-
     DynArray(SystemFunc)* systems;
     DynArray(uint32_t)* stage_sysid[SYSTEM_STAGE_COUNT];
 } SystemStore;
@@ -34,5 +33,13 @@ SystemStore systemstore_create();
 
 void systemstore_register(SystemStore* store, enum SystemStage stage, SystemFunc system);
 void systemstore_run(SystemStore* store, enum SystemStage stage);
+
+static inline void systemstore_free(SystemStore* store) {
+    free(store->systems);
+    for (int i = 0; i < SYSTEM_STAGE_COUNT; ++i) {
+        free(store->stage_sysid[i]);
+    }
+    free(store);
+}
 
 #endif // HARMONIA_SYSTEM_STORE

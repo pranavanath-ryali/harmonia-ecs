@@ -34,7 +34,7 @@ void componentstore_add(ComponentStore *store, uint32_t type_id, uint32_t entity
     componentpool_add(pool, entity_id, data);
 }
 
-void* componentstore_get(ComponentStore* store, uint32_t entity_id, uint32_t type_id) {
+void* componentstore_get(ComponentStore* store, uint32_t type_id, uint32_t entity_id) {
     ComponentPool* pool = Sparse_voidptr_get(store->pools, type_id);
     if (!pool) {
         fprintf(stderr, "ERROR: Component previously not registred");
@@ -44,7 +44,7 @@ void* componentstore_get(ComponentStore* store, uint32_t entity_id, uint32_t typ
     return componentpool_get(pool, entity_id);
 }
 
-void componentstore_remove(ComponentStore *store, uint32_t entity_id, uint32_t type_id) {
+void componentstore_remove(ComponentStore *store, uint32_t type_id, uint32_t entity_id) {
     ComponentPool* pool = Sparse_voidptr_get(store->pools, type_id);
     if (!pool) {
         fprintf(stderr, "ERROR: Component previously not registred");
