@@ -6,7 +6,7 @@
 
 ComponentStore componentstore_create() {
     ComponentStore store;
-    store.pools = Dense_voidptr_create(NULL);
+    store.pools = Sparse_voidptr_create(NULL);
 
     return store;
 }
@@ -21,11 +21,11 @@ void componentstore_register(ComponentStore *store, uint32_t type_id,
         abort();
     }
 
-    Dense_voidptr_add(store->pools, type_id, (void *)pool);
+    Sparse_voidptr_add(store->pools, type_id, (void *)pool);
 }
 
 void componentstore_add(ComponentStore *store, uint32_t type_id, uint32_t entity_id, const void *data) {
-    ComponentPool* pool = (ComponentPool*)Dense_voidptr_get(store->pools, type_id);
+    ComponentPool* pool = (ComponentPool*)Sparse_voidptr_get(store->pools, type_id);
     if (!pool) {
         fprintf(stderr, "ERROR: Tried to add a component before registering");
         abort();
@@ -35,7 +35,7 @@ void componentstore_add(ComponentStore *store, uint32_t type_id, uint32_t entity
 }
 
 void* componentstore_get(ComponentStore* store, uint32_t entity_id, uint32_t type_id) {
-    ComponentPool* pool = Dense_voidptr_get(store->pools, type_id);
+    ComponentPool* pool = Sparse_voidptr_get(store->pools, type_id);
     if (!pool) {
         fprintf(stderr, "ERROR: Component previously not registred");
         abort();
@@ -45,7 +45,7 @@ void* componentstore_get(ComponentStore* store, uint32_t entity_id, uint32_t typ
 }
 
 void componentstore_remove(ComponentStore *store, uint32_t entity_id, uint32_t type_id) {
-    ComponentPool* pool = Dense_voidptr_get(store->pools, type_id);
+    ComponentPool* pool = Sparse_voidptr_get(store->pools, type_id);
     if (!pool) {
         fprintf(stderr, "ERROR: Component previously not registred");
         abort();

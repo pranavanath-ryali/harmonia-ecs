@@ -16,7 +16,7 @@ ComponentPool *componentpool_create(size_t stride) {
     pool->capacity = 0;
     pool->data = NULL;
 
-    pool->entityid_map = Dense_uint32_t_create(UINT32_MAX);
+    pool->entityid_map = Sparse_uint32_t_create(UINT32_MAX);
     if (!pool->entityid_map) {
         free(pool);
         return NULL;
@@ -41,12 +41,12 @@ void componentpool_add(ComponentPool *pool, uint32_t entity_id,
     void *dest = (char *)pool->data + (pool->index_map->count * pool->stride);
     memcpy(dest, data, pool->stride);
 
-    Dense_uint32_t_add(pool->entityid_map, entity_id, pool->index_map->count);
+    Sparse_uint32_t_add(pool->entityid_map, entity_id, pool->index_map->count);
     DynArray_uint32_t_push(pool->index_map, entity_id);
 }
 
 void *componentpool_get(ComponentPool *pool, uint32_t entity_id) {
-    uint32_t dense_index = Dense_uint32_t_get(pool->entityid_map, entity_id);
+    uint32_t dense_index = Sparse_uint32_t_get(pool->entityid_map, entity_id);
     if (dense_index == UINT32_MAX) {
         fprintf(stderr, "ERROR: Entity with id: %u does not have compoenent",
                 entity_id);
@@ -58,13 +58,13 @@ void *componentpool_get(ComponentPool *pool, uint32_t entity_id) {
 }
 
 void componentpool_remove(ComponentPool *pool, uint32_t entity_id) {
-    uint32_t dense_index = Dense_uint32_t_get(pool->entityid_map, entity_id);
+    uint32_t dense_index = Sparse_uint32_t_get(pool->entityid_map, entity_id);
     if (dense_index == UINT32_MAX) {
         fprintf(stderr, "ERROR: Entity with id: %u does not have compoenent",
                 entity_id);
         abort();
     }
-    Dense_uint32_t_pop(pool->entityid_map, entity_id);
+    Sparse_uint32_t_pop(pool->entityid_map, entity_id);
 
     if (dense_index == pool->index_map->count - 1) {
         DynArray_uint32_t_pop(pool->index_map);
@@ -79,7 +79,7 @@ void componentpool_remove(ComponentPool *pool, uint32_t entity_id) {
 
     uint32_t last_data_entity_id = DynArray_uint32_t_pop(pool->index_map);
 
-    Dense_uint32_t_add(pool->entityid_map, last_data_entity_id, dense_index);
+    Sparse_uint32_t_add(pool->entityid_map, last_data_entity_id, dense_index);
     DynArray_uint32_t_write_at(pool->index_map, dense_index,
                                last_data_entity_id);
 }

@@ -11,7 +11,7 @@ typedef struct {
     size_t stride;
     uint32_t capacity;
 
-    Dense(uint32_t) * entityid_map;
+    Sparse(uint32_t) * entityid_map;
     DynArray(uint32_t) * index_map;
 } ComponentPool;
 

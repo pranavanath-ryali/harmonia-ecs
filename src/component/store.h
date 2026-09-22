@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 typedef struct {
-    Dense(voidptr) * pools;
+    Sparse(voidptr) * pools;
 } ComponentStore;
 
 ComponentStore componentstore_create();

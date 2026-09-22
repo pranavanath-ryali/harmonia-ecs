@@ -1,26 +1,26 @@
-#ifndef UTILS_DENSE
-#define UTILS_DENSE
+#ifndef UTILS_SPARSE
+#define UTILS_SPARSE
 
 #include <stdio.h>
 #include <stdlib.h>
 
 // Two-level macro expansion ensures aliases and types expand fully before
 // pasting
-#define DENSE_CONCAT_IMPL(A, B) A##_##B
-#define DENSE_CONCAT(A, B) DENSE_CONCAT_IMPL(A, B)
+#define SPARSE_CONCAT_IMPL(A, B) A##_##B
+#define SPARSE_CONCAT(A, B) SPARSE_CONCAT_IMPL(A, B)
 
-// Clean type constructor syntax: Dense(u32) -> Dense_u32
-#define Dense(T) DENSE_CONCAT(Dense, T)
+// Clean type constructor syntax: Sparse(u32) -> Sparse_u32
+#define Sparse(T) SPARSE_CONCAT(Sparse, T)
 
-#define DEFINE_DENSE(T)                                                        \
+#define DEFINE_SPARSE(T)                                                        \
     typedef struct {                                                           \
         T *data;                                                               \
         size_t capacity;                                                       \
         T sentinal;                                                            \
-    } Dense(T);                                                                \
+    } Sparse(T);                                                                \
                                                                                \
-    static inline Dense(T) * DENSE_CONCAT(Dense(T), create)(T sentinal) {      \
-        Dense(T) *arr = malloc(sizeof(Dense(T)));                              \
+    static inline Sparse(T) * SPARSE_CONCAT(Sparse(T), create)(T sentinal) {      \
+        Sparse(T) *arr = malloc(sizeof(Sparse(T)));                              \
                                                                                \
         if (!arr)                                                              \
             return NULL;                                                       \
@@ -40,14 +40,14 @@
         return arr;                                                            \
     }                                                                          \
                                                                                \
-    static inline void DENSE_CONCAT(Dense(T), free)(Dense(T) * arr) {          \
+    static inline void SPARSE_CONCAT(Sparse(T), free)(Sparse(T) * arr) {          \
         if (!arr)                                                              \
             return;                                                            \
         free(arr->data);                                                       \
         free(arr);                                                             \
     }                                                                          \
                                                                                \
-    static inline void DENSE_CONCAT(Dense(T), add)(Dense(T) * arr, size_t key, \
+    static inline void SPARSE_CONCAT(Sparse(T), add)(Sparse(T) * arr, size_t key, \
                                                    T value) {                  \
         if (key >= arr->capacity) {                                            \
             size_t old_capacity = arr->capacity;                               \
@@ -69,18 +69,18 @@
         arr->data[key] = value;                                                \
     }                                                                          \
                                                                                \
-    static inline T DENSE_CONCAT(Dense(T), get)(Dense(T) * arr, size_t key) {  \
+    static inline T SPARSE_CONCAT(Sparse(T), get)(Sparse(T) * arr, size_t key) {  \
         if (key >= arr->capacity) {                                            \
             return arr->sentinal;                                              \
         }                                                                      \
         return arr->data[key];                                                 \
     }                                                                          \
                                                                                \
-    static inline void DENSE_CONCAT(Dense(T), pop)(Dense(T) * arr,             \
+    static inline void SPARSE_CONCAT(Sparse(T), pop)(Sparse(T) * arr,             \
                                                    size_t key) {               \
         if (key < arr->capacity) {                                             \
             arr->data[key] = arr->sentinal;                                    \
         }                                                                      \
     }
 
-#endif // UTILS_DENSE
+#endif // UTILS_SPARSE
