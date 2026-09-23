@@ -26,17 +26,17 @@ enum SystemStage {
 
 DEFINE_DYN_ARRAY(SystemFunc);
 
-typedef struct {
+struct SystemStore {
     DynArray(SystemFunc)* systems;
     DynArray(uint32_t)* stage_sysid[SYSTEM_STAGE_COUNT];
-} SystemStore;
+};
 
-SystemStore systemstore_create();
+struct SystemStore systemstore_create();
 
-void systemstore_register(SystemStore* store, enum SystemStage stage, SystemFunc system);
-void systemstore_run(SystemStore* store, enum SystemStage stage, struct WorldCell* world);
+void systemstore_register(struct SystemStore* store, enum SystemStage stage, SystemFunc system);
+void systemstore_run(struct SystemStore* store, enum SystemStage stage, struct WorldCell* world);
 
-static inline void systemstore_free(SystemStore* store) {
+static inline void systemstore_free(struct SystemStore* store) {
     free(store->systems);
     for (int i = 0; i < SYSTEM_STAGE_COUNT; ++i) {
         free(store->stage_sysid[i]);

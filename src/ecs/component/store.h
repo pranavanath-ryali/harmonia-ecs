@@ -5,22 +5,22 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-typedef struct {
+struct ComponentStore {
     Sparse(voidptr) * pools;
-} ComponentStore;
+};
 
-ComponentStore componentstore_create();
+struct ComponentStore componentstore_create();
 
-void componentstore_register(ComponentStore *store, uint32_t type_id,
+void componentstore_register(struct ComponentStore *store, uint32_t type_id,
                              size_t stride);
-void componentstore_add(ComponentStore *store, uint32_t type_id,
+void componentstore_add(struct ComponentStore *store, uint32_t type_id,
                         uint32_t entity_id, const void *data);
-void *componentstore_get(ComponentStore *store, uint32_t type_id,
+void *componentstore_get(struct ComponentStore *store, uint32_t type_id,
                          uint32_t entity_id);
-void componentstore_remove(ComponentStore *store, uint32_t type_id,
+void componentstore_remove(struct ComponentStore *store, uint32_t type_id,
                            uint32_t entity_id);
 
-static inline void componentstore_free(ComponentStore* store) {
+static inline void componentstore_free(struct ComponentStore* store) {
     free(store->pools);
     free(store);
 }

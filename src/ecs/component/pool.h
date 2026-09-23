@@ -6,21 +6,21 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef struct {
+struct ComponentPool {
     void *data;
     size_t stride;
     uint32_t capacity;
 
     Sparse(uint32_t) * entityid_map;
     DynArray(uint32_t) * index_map;
-} ComponentPool;
+};
 
-ComponentPool *componentpool_create(size_t stride);
+struct ComponentPool *componentpool_create(size_t stride);
 
-void componentpool_add(ComponentPool *pool, uint32_t entity_id,
+void componentpool_add(struct ComponentPool *pool, uint32_t entity_id,
                        const void *data);
-void *componentpool_get(ComponentPool *pool, uint32_t entity_id);
+void *componentpool_get(struct ComponentPool *pool, uint32_t entity_id);
 
-void componentpool_remove(ComponentPool *pool, uint32_t entity_id);
+void componentpool_remove(struct ComponentPool *pool, uint32_t entity_id);
 
 #endif // HARMONIA_COMPONENT_POOL

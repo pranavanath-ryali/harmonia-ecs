@@ -1,8 +1,8 @@
 #include "store.h"
 #include <stdint.h>
 
-SystemStore systemstore_create() {
-    SystemStore store;
+struct SystemStore systemstore_create() {
+    struct SystemStore store;
     store.systems = DynArray_SystemFunc_create();
 
     for (int i = 0; i < SYSTEM_STAGE_COUNT; ++i) {
@@ -12,7 +12,7 @@ SystemStore systemstore_create() {
     return store;
 }
 
-void systemstore_register(SystemStore *store, enum SystemStage stage,
+void systemstore_register(struct SystemStore *store, enum SystemStage stage,
                           SystemFunc system) {
     uint8_t stage_int = stage;
     uint32_t system_id = store->systems->count;
@@ -21,7 +21,7 @@ void systemstore_register(SystemStore *store, enum SystemStage stage,
     DynArray_SystemFunc_push(store->systems, system);
 }
 
-void systemstore_run(SystemStore *store, enum SystemStage stage, struct WorldCell* world) {
+void systemstore_run(struct SystemStore *store, enum SystemStage stage, struct WorldCell* world) {
     DynArray(uint32_t) *system_ids = store->stage_sysid[(int)stage];
     for (size_t i = 0; i < system_ids->count; ++i) {
         SystemFunc system = DynArray_SystemFunc_get(

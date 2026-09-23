@@ -1,17 +1,17 @@
 #ifndef HARMONIA_ECS_WORLD_CELL
 #define HARMONIA_ECS_WORLD_CELL
 
-#include "world.h"
 #include <stdint.h>
+#include "world.h"
 
-typedef struct {
-    World* world;
-} WorldCell;
+struct WorldCell {
+    struct World* world;
+};
 
-static inline const void* world_get_component(WorldCell* cell, uint32_t type_id, EntityId entity_id) {
+static inline const void* world_get_component(struct WorldCell* cell, uint32_t type_id, uint32_t entity_id) {
     return ecs_component_get(cell->world, type_id, entity_id);
 }
-static inline void* world_get_component_mut(WorldCell* cell, uint32_t type_id, EntityId entity_id) {
+static inline void* world_get_component_mut(struct WorldCell* cell, uint32_t type_id, uint32_t entity_id) {
     return ecs_component_get_mut(cell->world, type_id, entity_id);
 }
 
