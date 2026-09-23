@@ -1,8 +1,9 @@
 #ifndef HARMONIA_SYSTEM_STORE
 #define HARMONIA_SYSTEM_STORE
 
-#include "../utils/types.h"
-#include "../utils/id_generator.h"
+#include "../../utils/types.h"
+#include "../../utils/id_generator.h"
+
 #include <stdlib.h>
 
 typedef void (*SystemFunc)(void);

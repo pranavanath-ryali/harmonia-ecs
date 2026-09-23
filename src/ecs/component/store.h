@@ -1,7 +1,7 @@
 #ifndef HARMONIA_COMPONENT_STORE
 #define HARMONIA_COMPONENT_STORE
 
-#include "../utils/types.h"
+#include "../../utils/types.h"
 #include <stdint.h>
 #include <stdlib.h>
 

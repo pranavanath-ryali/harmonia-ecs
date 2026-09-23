@@ -3,8 +3,6 @@
 
 SystemStore systemstore_create() {
     SystemStore store;
-
-    store.id_gen = create_id_generator();
     store.systems = DynArray_SystemFunc_create();
 
     for (int i = 0; i < SYSTEM_STAGE_COUNT; ++i) {

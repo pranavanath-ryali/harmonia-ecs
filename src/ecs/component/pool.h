@@ -1,7 +1,7 @@
 #ifndef HARMONIA_COMPONENT_POOL
 #define HARMONIA_COMPONENT_POOL
 
-#include "../utils/types.h"
+#include "../../utils/types.h"
 
 #include <stddef.h>
 #include <stdint.h>

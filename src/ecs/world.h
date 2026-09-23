@@ -1,9 +1,9 @@
 #ifndef HARMONIA_WORLD
 #define HARMONIA_WORLD
 
+#include "../utils/id_generator.h"
 #include "component/store.h"
 #include "system/store.h"
-#include "utils/id_generator.h"
 
 #include <stddef.h>
 #include <stdint.h>
@@ -51,10 +51,14 @@ static inline void ecs_component_add(World *w, uint32_t type_id,
                                      EntityId entity_id, const void *data) {
     componentstore_add(&w->component_store, type_id, entity_id, data);
 };
-static inline void ecs_component_get(World *w, uint32_t type_id,
-                                     EntityId entity_id) {
-    componentstore_get(&w->component_store, type_id, entity_id);
+static inline const void *ecs_component_get(World *w, uint32_t type_id,
+                                            EntityId entity_id) {
+    return componentstore_get(&w->component_store, type_id, entity_id);
 };
+static inline void *ecs_component_get_mut(World *w, uint32_t type_id,
+                                          EntityId entity_id) {
+    return componentstore_get(&w->component_store, type_id, entity_id);
+}
 static inline void ecs_component_remove(World *w, uint32_t type_id,
                                         EntityId entity_id) {
     componentstore_remove(&w->component_store, type_id, entity_id);
