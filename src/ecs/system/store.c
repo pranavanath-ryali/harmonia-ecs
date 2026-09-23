@@ -21,11 +21,11 @@ void systemstore_register(SystemStore *store, enum SystemStage stage,
     DynArray_SystemFunc_push(store->systems, system);
 }
 
-void systemstore_run(SystemStore *store, enum SystemStage stage) {
+void systemstore_run(SystemStore *store, enum SystemStage stage, struct WorldCell* world) {
     DynArray(uint32_t) *system_ids = store->stage_sysid[(int)stage];
     for (size_t i = 0; i < system_ids->count; ++i) {
         SystemFunc system = DynArray_SystemFunc_get(
             store->systems, DynArray_uint32_t_get(system_ids, i));
-        system();
+        system(world);
     }
 }

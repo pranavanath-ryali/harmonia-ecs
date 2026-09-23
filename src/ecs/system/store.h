@@ -6,7 +6,8 @@
 
 #include <stdlib.h>
 
-typedef void (*SystemFunc)(void);
+struct WorldCell;
+typedef void (*SystemFunc)(struct WorldCell* cell);
 
 #define SYSTEM_STAGE_COUNT 9
 enum SystemStage {
@@ -33,7 +34,7 @@ typedef struct {
 SystemStore systemstore_create();
 
 void systemstore_register(SystemStore* store, enum SystemStage stage, SystemFunc system);
-void systemstore_run(SystemStore* store, enum SystemStage stage);
+void systemstore_run(SystemStore* store, enum SystemStage stage, struct WorldCell* world);
 
 static inline void systemstore_free(SystemStore* store) {
     free(store->systems);
