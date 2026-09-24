@@ -1,38 +1,35 @@
-#include "../src/ecs/world.h"
-#include "../src/ecs/world_cell.h"
-#include "../src/utils/type_id.h"
-#include <stdio.h>
+#include "../src/app/app.h"
 
-struct ComponentA {
-    int x;
-};
+void test_system_1(struct WorldCell *cell) { printf("SYSTEMID: 1\n"); }
 
-DECLARE_TYPE_ID(ComponentA);
+void test_system_2(struct WorldCell *cell) { printf("SYSTEMID: 2\n"); }
 
-void system_test(struct WorldCell *cell) {
-    struct ComponentA *a = world_get_component(cell, TYPE_ID(ComponentA), 0);
-    a->x += 10;
-}
-void another_system_test(struct WorldCell *cell) {
-    struct ComponentA *a = world_get_component(cell, TYPE_ID(ComponentA), 0);
-    printf("YAY ITS WORKING; %d\n", a->x);
-}
+void test_system_3(struct WorldCell *cell) { printf("SYSTEMID: 3\n"); }
+
+void test_system_4(struct WorldCell *cell) { printf("SYSTEMID: 4\n"); }
+
+void test_system_5(struct WorldCell *cell) { printf("SYSTEMID: 5\n"); }
+
+void test_system_6(struct WorldCell *cell) { printf("SYSTEMID: 6\n"); }
+
+void test_system_7(struct WorldCell *cell) { printf("SYSTEMID: 7\n"); }
+
+void test_system_8(struct WorldCell *cell) { printf("SYSTEMID: 8\n"); }
+
+void test_system_9(struct WorldCell *cell) { printf("SYSTEMID: 9\n"); }
+
+void test_system_10(struct WorldCell *cell) { printf("SYSTEMID: 10\n"); }
 
 int main() {
-    struct World *world = create_world();
+    struct World* world = app_create_world();
 
-    uint32_t e = ecs_create_entity(world);
-    ecs_component_register(world, TYPE_ID(ComponentA),
-                           sizeof(struct ComponentA));
+    app_system_register(world, PRE_UPDATE, test_system_1);
+    app_system_register(world, PRE_UPDATE, test_system_9);
+    app_system_register(world, PRE_UPDATE, test_system_10);
+    app_system_register(world, UPDATE, test_system_2);
+    app_system_register(world, UPDATE, test_system_5);
+    app_system_register(world, POST_UPDATE, test_system_4);
+    app_system_register(world, UPDATE, test_system_3);
 
-    struct ComponentA a;
-    a.x = 10;
-    ecs_component_add(world, TYPE_ID(ComponentA), e, &a);
-
-    ecs_system_register(world, UPDATE, system_test);
-    ecs_system_register(world, UPDATE, another_system_test);
-
-    struct WorldCell cell;
-    cell.world = world;
-    ecs_system_run(world, UPDATE, &cell);
+    app_run(world);
 }
